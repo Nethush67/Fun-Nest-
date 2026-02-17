@@ -26,7 +26,7 @@
         "priceCurrency": "USD"
       },
       "description": "The ultimate desktop companion app.",
-      "softwareVersion": "1.2.0" 
+      "softwareVersion": "2.0.1" 
     }
     </script>
 
@@ -48,6 +48,7 @@
             --primary-light: #e0e7ff; /* Indigo 100 */
             --accent: #ec4899;        /* Pink 500 */
             --border: #e2e8f0;
+            --success: #10b981;       /* Green for Download Success */
             
             /* Shadows & Radius */
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -87,7 +88,7 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
             -webkit-font-smoothing: antialiased;
         }
@@ -114,7 +115,6 @@
 
         .section-padding { padding: 6rem 0; }
         
-        /* Typography */
         h1, h2, h3 { line-height: 1.1; margin-bottom: 1rem; }
         .text-muted { color: var(--text-muted); }
 
@@ -131,7 +131,7 @@
             display: inline-block;
         }
 
-        /* Buttons */
+        /* Standard Buttons (Header/Hero) */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -191,7 +191,6 @@
             100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* Scroll Animations */
         .scroll-animate {
             opacity: 0;
             transform: translateY(30px);
@@ -405,7 +404,7 @@
         .feature-icon svg { width: 28px; height: 28px; }
 
         /* ========================================
-        8. DOWNLOADS SECTION (CRITICAL REQUIREMENT)
+        8. DOWNLOADS SECTION (WITH GREEN ANIMATION)
         ======================================== */
         .downloads-section {
             background: linear-gradient(180deg, var(--bg-body) 0%, var(--bg-surface) 100%);
@@ -474,7 +473,9 @@
             max-width: 340px;
         }
 
-        /* Download Button specific styling */
+        /* * DOWNLOAD BUTTON WITH PROGRESS BAR
+         * Matches logic from the green animation request 
+         */
         .download-btn {
             display: flex;
             flex-direction: column;
@@ -489,7 +490,7 @@
             text-decoration: none;
             color: var(--text-main);
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Essential for progress bar */
         }
 
         .download-btn:hover {
@@ -497,55 +498,38 @@
             background-color: var(--bg-body);
             transform: translateY(-2px);
         }
-        
-        .btn-label { font-weight: 700; display: flex; align-items: center; gap: 0.75rem; font-size: 1.1rem; }
-        .btn-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
 
-        /* Progress Simulation Overlay */
-        .progress-overlay {
+        /* The progress bar inside the button */
+        .progress-bar {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-surface);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .progress-overlay.active { opacity: 1; pointer-events: all; }
-
-        .progress-bar-track {
-            width: 70%;
-            height: 8px;
-            background: var(--border);
-            border-radius: 99px;
-            overflow: hidden;
-            margin-top: 1.5rem;
-        }
-        
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--primary);
+            top: 0; left: 0; bottom: 0;
             width: 0%;
+            background: var(--primary-light);
+            z-index: 1;
             transition: width 0.1s linear;
         }
 
-        .success-message {
-            display: none;
-            flex-direction: column;
+        /* The success message overlay (Green) */
+        .dl-complete-msg {
+            position: absolute;
+            inset: 0;
+            background: var(--success);
+            color: white;
+            display: flex;
             align-items: center;
-            color: var(--text-main);
-            animation: float 2s infinite ease-in-out;
+            justify-content: center;
+            font-weight: 700;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            gap: 0.5rem;
         }
-        .success-icon {
-            width: 56px; height: 56px;
-            color: #10b981; /* Success Green */
-            margin-bottom: 0.75rem;
-        }
+        .dl-complete-msg.active { opacity: 1; pointer-events: auto; }
+
+        .btn-label { font-weight: 700; display: flex; align-items: center; gap: 0.75rem; font-size: 1.1rem; position: relative; z-index: 2; }
+        .btn-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; position: relative; z-index: 2; }
+
 
         /* ========================================
         9. QUICK START & CHANGELOG
@@ -794,30 +778,31 @@
                         </div>
 
                         <div class="download-actions">
-                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest for macOS">
+                            <a href="#" class="download-btn js-download-trigger" data-file="FunNest-Mac.dmg">
+                                <div class="progress-bar"></div>
+                                <div class="dl-complete-msg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                                    Done!
+                                </div>
                                 <span class="btn-label">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.93-.91 1.32.09 2.53.53 3.45 1.34-2.88 1.76-2.4 6.13.52 7.32zM13 3.5c.52-1.5 2.61-2.21 3.5-2.5-.52 2.22-2.34 3.79-3.5 3.5z"/></svg>
                                     Download for macOS
                                 </span>
-                                <span class="btn-meta">v1.2.0 • 45.2 MB</span>
+                                <span class="btn-meta">v2.0.1 • 45.2 MB</span>
                             </a>
 
-                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest for Windows">
+                            <a href="#" class="download-btn js-download-trigger" data-file="FunNest-Win.exe">
+                                <div class="progress-bar"></div>
+                                <div class="dl-complete-msg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                                    Done!
+                                </div>
                                 <span class="btn-label">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4h-13.051M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
                                     Download for Windows
                                 </span>
-                                <span class="btn-meta">v1.2.0 • 38.6 MB</span>
+                                <span class="btn-meta">v2.0.1 • 38.6 MB</span>
                             </a>
-                        </div>
-
-                        <div class="progress-overlay">
-                            <h4 style="margin-bottom: 0.5rem">Downloading...</h4>
-                            <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
-                            <div class="success-message">
-                                <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>Download Started!</span>
-                            </div>
                         </div>
                     </div>
 
@@ -829,30 +814,31 @@
                         </div>
 
                         <div class="download-actions">
-                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest hidden for macOS">
+                            <a href="#" class="download-btn js-download-trigger" data-file="FunNestHidden-Mac.dmg">
+                                <div class="progress-bar"></div>
+                                <div class="dl-complete-msg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                                    Done!
+                                </div>
                                 <span class="btn-label">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.93-.91 1.32.09 2.53.53 3.45 1.34-2.88 1.76-2.4 6.13.52 7.32zM13 3.5c.52-1.5 2.61-2.21 3.5-2.5-.52 2.22-2.34 3.79-3.5 3.5z"/></svg>
                                     Download for macOS
                                 </span>
-                                <span class="btn-meta">v1.2.0 • 45.2 MB</span>
+                                <span class="btn-meta">v2.0.1 • 45.2 MB</span>
                             </a>
 
-                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest hidden for Windows">
+                            <a href="#" class="download-btn js-download-trigger" data-file="FunNestHidden-Win.exe">
+                                <div class="progress-bar"></div>
+                                <div class="dl-complete-msg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                                    Done!
+                                </div>
                                 <span class="btn-label">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4h-13.051M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
                                     Download for Windows
                                 </span>
-                                <span class="btn-meta">v1.2.0 • 38.6 MB</span>
+                                <span class="btn-meta">v2.0.1 • 38.6 MB</span>
                             </a>
-                        </div>
-
-                        <div class="progress-overlay">
-                            <h4 style="margin-bottom: 0.5rem">Downloading...</h4>
-                            <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
-                            <div class="success-message">
-                                <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span>Download Started!</span>
-                            </div>
                         </div>
                     </div>
 
@@ -896,12 +882,12 @@
             <div class="changelog-list scroll-animate">
                 <details open>
                     <summary>
-                        <span>v1.2.0 <span class="badge">Latest</span></span>
+                        <span>v2.0.1 <span class="badge">Latest</span></span>
                     </summary>
                     <div class="changelog-content">
                         <p>Released February 10, 2026</p>
                         <ul>
-                            <li>New dashboard layout for better visibility.</li>
+                            <li>Completely redesigned dashboard.</li>
                             <li>Improved dark mode contrast.</li>
                             <li>Fixed sync issues on Windows 11.</li>
                             <li>Added drag-and-drop file support.</li>
@@ -911,7 +897,7 @@
 
                 <details>
                     <summary>
-                        <span>v1.1.0</span>
+                        <span>v1.5.0</span>
                     </summary>
                     <div class="changelog-content">
                         <p>Released January 15, 2026</p>
@@ -957,8 +943,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Theme Toggle Logic (Preserved from V1)
-            // ============================
+            // 1. Theme Toggle Logic
             const themeToggle = document.getElementById('theme-toggle');
             const html = document.documentElement;
             const iconSvg = themeToggle.querySelector('svg');
@@ -993,59 +978,52 @@
             });
 
 
-            // 2. Download Simulation (Progress Bar Animation)
+            // 2. Download Simulation (Green Button Fill Animation)
             // ============================
             const downloadBtns = document.querySelectorAll('.js-download-trigger');
 
             downloadBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    // Prevent actual navigation for the demo effect
+                    e.preventDefault();
                     
-                    if (!prefersReducedMotion) {
-                        e.preventDefault(); 
-                        const card = btn.closest('.download-card');
-                        const overlay = card.querySelector('.progress-overlay');
-                        const bar = overlay.querySelector('.progress-bar-fill');
-                        const successMsg = overlay.querySelector('.success-message');
-                        const title = overlay.querySelector('h4');
+                    if(btn.classList.contains('downloading')) return;
+                    btn.classList.add('downloading');
 
-                        // Reset state
-                        bar.style.width = '0%';
-                        successMsg.style.display = 'none';
-                        title.style.display = 'block';
-                        bar.parentElement.style.display = 'block';
+                    const progressBar = btn.querySelector('.progress-bar');
+                    const completeMsg = btn.querySelector('.dl-complete-msg');
 
-                        // Show overlay
-                        overlay.classList.add('active');
+                    // Reset
+                    progressBar.style.width = '0%';
+                    
+                    // Simulation Loop
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += Math.random() * 10 + 5; // Random increment
+                        if(progress > 100) progress = 100;
+                        progressBar.style.width = `${progress}%`;
 
-                        // Animate Bar Steps
-                        setTimeout(() => { bar.style.width = '30%'; }, 100);
-                        setTimeout(() => { bar.style.width = '70%'; }, 600);
-                        setTimeout(() => { 
-                            bar.style.width = '100%';
+                        if(progress === 100) {
+                            clearInterval(interval);
                             
-                            // Show Success after completion
+                            // Show Success Overlay (Green)
                             setTimeout(() => {
-                                title.style.display = 'none';
-                                bar.parentElement.style.display = 'none';
-                                successMsg.style.display = 'flex';
-                                
-                                // Optional: Redirect logic here
-                                // window.location.href = btn.href;
-                                
-                                // Reset after 3s
-                                setTimeout(() => {
-                                    overlay.classList.remove('active');
-                                }, 3000);
-                            }, 400);
-                        }, 1500);
-                    }
+                                completeMsg.classList.add('active');
+                            }, 300);
+
+                            // Reset after 3 seconds
+                            setTimeout(() => {
+                                completeMsg.classList.remove('active');
+                                progressBar.style.width = '0%';
+                                btn.classList.remove('downloading');
+                            }, 3000);
+                        }
+                    }, 200);
                 });
             });
 
 
             // 3. Scroll Entrance Animations (Observer)
-            // ============================
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: "0px 0px -50px 0px"
