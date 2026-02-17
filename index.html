@@ -1,27 +1,1021 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fun Nest Test</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background-color: #f0f8ff;
-      color: #333;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download Fun nest, the ultimate desktop companion for productivity and organization. Available for macOS and Windows.">
+    <meta name="theme-color" content="#4f46e5">
+    
+    <meta property="og:title" content="Fun nest - Your Desktop Companion">
+    <meta property="og:description" content="Boost productivity with Fun nest. Secure, fast, and intuitive.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630"> 
+    <meta property="og:type" content="website">
+
+    <title>Fun nest | Download</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Fun nest",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "ProductivityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      },
+      "description": "The ultimate desktop companion app.",
+      "softwareVersion": "1.2.0" 
+      /* REPLACE: Update version and description above */
     }
-    h1 {
-      color: #0077cc;
-    }
-    p {
-      font-size: 18px;
-    }
-  </style>
+    </script>
+
+    <style>
+        /* ========================================
+        CSS VARIABLES & THEME
+        ========================================
+        */
+        :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            
+            /* Light Theme (Default) */
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #e0e7ff;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.7);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --primary-light: #312e81;
+            --border: #334155;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+        }
+
+        /* ========================================
+        RESET & BASE STYLES
+        ========================================
+        */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img, svg { display: block; max-width: 100%; }
+        
+        button, .btn { cursor: pointer; border: none; font-family: inherit; }
+
+        /* Focus Visibility for Accessibility */
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* ========================================
+        UTILITIES & COMPONENTS
+        ========================================
+        */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-padding { padding: 5rem 0; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            background-color: transparent;
+            color: var(--text-main);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background-color: var(--bg-surface);
+        }
+
+        .badge {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        /* ========================================
+        HEADER
+        ========================================
+        */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+        }
+        .logo svg { height: 28px; width: 28px; fill: var(--primary); }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            color: var(--text-muted);
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+        }
+        .theme-toggle:hover { background-color: var(--border); color: var(--text-main); }
+
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
+
+        /* ========================================
+        HERO
+        ========================================
+        */
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        /* Hero Animation */
+        .hero-cta {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-cta::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+            animation: pulse-ring 2s infinite;
+            z-index: -1;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .mockup {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 16/10;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* CSS Illustration inside mockup */
+        .mockup-ui {
+            width: 80%;
+            height: 80%;
+            background: var(--bg-body);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .mockup-ui::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+        }
+        .mockup-ui::after {
+            content: '';
+            position: absolute;
+            top: 20px; left: 60px;
+            right: 20px; height: 10px;
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        @media (min-width: 992px) {
+            .hero { grid-template-columns: 1fr 1fr; }
+            .hero-text h1 { font-size: 3.5rem; }
+        }
+
+        /* ========================================
+        FEATURES
+        ========================================
+        */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+            opacity: 0; /* JS handles fade-in */
+            transform: translateY(20px);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .feature-icon svg { width: 24px; height: 24px; }
+
+        .feature-card h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
+        .feature-card p { color: var(--text-muted); }
+
+        /* ========================================
+        DOWNLOADS (CRITICAL SECTION)
+        ========================================
+        */
+        .downloads-section {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        /* The Box Container */
+        .download-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 992px) {
+            .download-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* The Card Styling */
+        .download-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .download-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-icon-area {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-surface);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .card-icon-area svg { width: 40px; height: 40px; fill: var(--primary); }
+
+        .download-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .download-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .download-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        .download-btn:hover {
+            border-color: var(--primary);
+            background-color: var(--bg-glass);
+            transform: scale(1.02);
+        }
+        .download-btn:focus-visible {
+            z-index: 2;
+        }
+
+        .btn-label { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .btn-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* Progress Simulation Overlay */
+        .progress-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .progress-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .progress-bar-track {
+            width: 60%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-main);
+            animation: fade-in-up 0.3s ease;
+        }
+        .success-icon {
+            width: 48px; height: 48px;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ========================================
+        QUICK START & CHANGELOG
+        ========================================
+        */
+        .steps-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            margin-top: 3rem;
+        }
+        
+        .step-item {
+            text-align: center;
+        }
+        .step-number {
+            width: 40px; height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .changelog-list {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--bg-surface);
+        }
+
+        details {
+            border-bottom: 1px solid var(--border);
+        }
+        details:last-child { border-bottom: none; }
+
+        summary {
+            padding: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+        }
+        summary:hover { background-color: var(--bg-body); }
+        summary::-webkit-details-marker { display: none; }
+        
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        details[open] summary::after { content: '−'; }
+
+        .changelog-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--border);
+        }
+        .changelog-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* ========================================
+        FOOTER
+        ========================================
+        */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a:hover { color: var(--primary); }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-icons svg {
+            width: 20px; height: 20px; fill: currentColor;
+            transition: var(--transition);
+        }
+        .social-icons a:hover { color: var(--primary); transform: translateY(-2px); }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        /* ========================================
+        ANIMATIONS & ACCESS
+        ========================================
+        */
+        @keyframes pulse-ring {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to Fun Nest!</h1>
-  <p>If you see this page, your GitHub Pages site is working.</p>
+
+    <header class="header">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor" fill-opacity="0.1"/>
+                    <path d="M7 12L10 15L17 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Fun nest
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#downloads">Downloads</a>
+                <a href="#changelog">Changelog</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <a href="#downloads" class="btn btn-primary">Download</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-text">
+                <h1>The ultimate<br>desktop companion.</h1>
+                <p>Organize your digital life with Fun nest. Lightning fast, secure, and beautifully designed for macOS and Windows.</p>
+                <a href="#downloads" class="btn btn-primary hero-cta">
+                    Download Fun nest
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                </a>
+            </div>
+            <div class="hero-visual">
+                <div class="mockup">
+                    <div class="mockup-ui"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-padding container">
+            <div class="section-header">
+                <h2>Why Fun nest?</h2>
+                <p style="color: var(--text-muted)">Everything you need to stay focused.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Blazing Fast</h3>
+                    <p>Optimized for native performance. Opens instantly and runs in the background with zero lag.</p>
+                </div>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Secure by Default</h3>
+                    <p>Your data never leaves your device without permission. End-to-end encryption built-in.</p>
+                </div>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <h3>Offline Ready</h3>
+                    <p>Keep working even when the internet goes down. Changes sync automatically when you reconnect.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="downloads" class="section-padding downloads-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Downloads</h2>
+                    <p style="color: var(--text-muted)">Choose your version</p>
+                </div>
+
+                <div class="download-grid">
+                    
+                    <div class="download-card scroll-animate">
+                        <h3>Fun nest</h3>
+                        
+                        <div class="card-icon-area">
+                            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                        </div>
+
+                        <div class="download-actions">
+                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest for macOS">
+                                <span class="btn-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.93-.91 1.32.09 2.53.53 3.45 1.34-2.88 1.76-2.4 6.13.52 7.32zM13 3.5c.52-1.5 2.61-2.21 3.5-2.5-.52 2.22-2.34 3.79-3.5 3.5z"/></svg>
+                                    Download for macOS
+                                </span>
+                                <span class="btn-meta">v1.2.0 • 45.2 MB</span>
+                            </a>
+
+                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest for Windows">
+                                <span class="btn-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4h-13.051M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                                    Download for Windows
+                                </span>
+                                <span class="btn-meta">v1.2.0 • 38.6 MB</span>
+                            </a>
+                        </div>
+
+                        <div class="progress-overlay">
+                            <h4 style="margin-bottom: 0.5rem">Downloading...</h4>
+                            <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+                            <div class="success-message">
+                                <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Download Started!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="download-card scroll-animate">
+                        <h3>Fun nest hidden</h3>
+                        
+                        <div class="card-icon-area">
+                            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                        </div>
+
+                        <div class="download-actions">
+                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest hidden for macOS">
+                                <span class="btn-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.93-.91 1.32.09 2.53.53 3.45 1.34-2.88 1.76-2.4 6.13.52 7.32zM13 3.5c.52-1.5 2.61-2.21 3.5-2.5-.52 2.22-2.34 3.79-3.5 3.5z"/></svg>
+                                    Download for macOS
+                                </span>
+                                <span class="btn-meta">v1.2.0 • 45.2 MB</span>
+                            </a>
+
+                            <a href="#" class="download-btn js-download-trigger" aria-label="Download Fun nest hidden for Windows">
+                                <span class="btn-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4h-13.051M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                                    Download for Windows
+                                </span>
+                                <span class="btn-meta">v1.2.0 • 38.6 MB</span>
+                            </a>
+                        </div>
+
+                        <div class="progress-overlay">
+                            <h4 style="margin-bottom: 0.5rem">Downloading...</h4>
+                            <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+                            <div class="success-message">
+                                <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Download Started!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <noscript>
+                    <div style="text-align:center; margin-top:1rem; color:var(--text-muted)">
+                        Javascript is disabled. Direct download links above are still fully functional.
+                    </div>
+                </noscript>
+            </div>
+        </section>
+
+        <section id="quick-start" class="section-padding container">
+            <div class="section-header">
+                <h2>Quick Start</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Download & Install</h3>
+                    <p style="color:var(--text-muted)">Get the version for your OS above.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Launch App</h3>
+                    <p style="color:var(--text-muted)">Open Fun nest and sign in.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Enjoy</h3>
+                    <p style="color:var(--text-muted)">Experience productivity like never before.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="changelog" class="section-padding container">
+            <div class="section-header">
+                <h2>Changelog</h2>
+            </div>
+            <div class="changelog-list">
+                <details open>
+                    <summary>
+                        <span>v1.2.0 <span class="badge">Latest</span></span>
+                    </summary>
+                    <div class="changelog-content">
+                        <p>Released February 10, 2026</p>
+                        <ul>
+                            <li>New dashboard layout for better visibility.</li>
+                            <li>Improved dark mode contrast.</li>
+                            <li>Fixed sync issues on Windows 11.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>
+                        <span>v1.1.0</span>
+                    </summary>
+                    <div class="changelog-content">
+                        <p>Released January 15, 2026</p>
+                        <ul>
+                            <li>Initial public release.</li>
+                            <li>Added offline support.</li>
+                            <li>Core features enabled.</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer container">
+        <div class="footer-content">
+            <div style="font-weight: 600; color: var(--text-main)">
+                &copy; 2026 Fun nest Inc. All rights reserved.
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+
+            <div class="social-icons">
+                <a href="#" aria-label="Twitter">
+                    <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                </a>
+                <a href="#" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Theme Toggle Logic
+            // ============================
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            const iconSvg = themeToggle.querySelector('svg');
+            
+            // Icons
+            const sunIcon = '<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path>';
+            const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+
+            // Check saved preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                iconSvg.innerHTML = sunIcon;
+            } else {
+                html.setAttribute('data-theme', 'light');
+                iconSvg.innerHTML = moonIcon;
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // Animate Icon change
+                iconSvg.style.opacity = '0';
+                setTimeout(() => {
+                    iconSvg.innerHTML = newTheme === 'dark' ? sunIcon : moonIcon;
+                    iconSvg.style.opacity = '1';
+                }, 150);
+            });
+
+
+            // 2. Download Simulation (Cosmetic Only)
+            // ============================
+            const downloadBtns = document.querySelectorAll('.js-download-trigger');
+
+            downloadBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Check if Reduced Motion is enabled
+                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    
+                    if (!prefersReducedMotion) {
+                        e.preventDefault(); // Stop immediate navigation for demo
+                        const card = btn.closest('.download-card');
+                        const overlay = card.querySelector('.progress-overlay');
+                        const bar = overlay.querySelector('.progress-bar-fill');
+                        const successMsg = overlay.querySelector('.success-message');
+                        const title = overlay.querySelector('h4');
+
+                        // Reset state
+                        bar.style.width = '0%';
+                        successMsg.style.display = 'none';
+                        title.style.display = 'block';
+                        bar.parentElement.style.display = 'block';
+
+                        // Show overlay
+                        overlay.classList.add('active');
+
+                        // Animate Bar (1.5s)
+                        setTimeout(() => { bar.style.width = '30%'; }, 100);
+                        setTimeout(() => { bar.style.width = '70%'; }, 600);
+                        setTimeout(() => { 
+                            bar.style.width = '100%';
+                            
+                            // Show Success after completion
+                            setTimeout(() => {
+                                title.style.display = 'none';
+                                bar.parentElement.style.display = 'none';
+                                successMsg.style.display = 'flex';
+                                
+                                // Optional: Proceed to actual link after delay
+                                // window.location.href = btn.href;
+                                
+                                // Reset after 3s for demo re-use
+                                setTimeout(() => {
+                                    overlay.classList.remove('active');
+                                }, 3000);
+                            }, 300);
+                        }, 1500);
+                    }
+                    // If reduced motion, just let the link click happen normally
+                });
+            });
+
+
+            // 3. Scroll Entrance Animations
+            // ============================
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>
